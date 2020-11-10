@@ -1,0 +1,14 @@
+<h2>New Task</h2>
+<form #todoForm="ngForm" (ngSubmit)="save(todoForm)">
+    <mat-form-field>
+        <input matInput placeholder="Write task description here." required #description="ngModel" name="description"
+            [(ngModel)]="todoData.description">
+        <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">
+            <div *ngIf="description.errors.required">
+                Description is required.
+            </div>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit">Add</button>
+</form>

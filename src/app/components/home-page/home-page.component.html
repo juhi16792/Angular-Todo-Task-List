@@ -1,0 +1,48 @@
+<div class = "center">
+  <h1>To-do Task List</h1>
+  <mat-form-field class="example-full-width">
+    <mat-label>Search Task</mat-label>
+    <input matInput [(ngModel)]="filterName" placeholder="Description">
+  </mat-form-field>
+</div>
+<br>
+<div class = "center">
+<button mat-button color="primary" (click)="openAddTodoDialog()">Add New Task</button>
+<br>
+<br>
+</div>
+<div class="center">
+  
+  <div #resizeBox class="container todo-container" style="position: relative;">
+    <h2>To Do</h2>
+    <div style="position: relative;">
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="todo-list" (cdkDropListDropped)="drop($event)">
+        <div class="todo-box container" [cdkDragData]="item" *ngFor="let item of todo | filterByName:filterName; index as i" cdkDrag>
+          <span>
+            {{item.description}}
+          </span>
+          <a class="delete-button" (click)="removeTodo(i, todo)"><i class="material-icons">delete</i></a>
+        </div>
+      </div>
+      <span #dragHandleCorner [cdkDragLockAxis]="lockAxis" class="dragHandle corner" cdkDrag (cdkDragMoved)="dragMove(dragHandleCorner)"></span>
+      <span #dragHandleRight cdkDragLockAxis="x" class="dragHandle right" cdkDrag (cdkDragMoved)="dragMove(dragHandleRight)"></span>
+      <span #dragHandleBottom cdkDragLockAxis="y" class="dragHandle bottom" cdkDrag (cdkDragMoved)="dragMove(dragHandleBottom)"></span>
+    </div>
+   
+  </div>
+
+  <div class="todo-container">
+    <h2>Done</h2>
+    <div>
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]" class="todo-list" (cdkDropListDropped)="drop($event)">
+          <div class="todo-box container" [cdkDragData]="item" *ngFor="let item of done | filterByName:filterName; index as i" cdkDrag>
+            <span>
+              {{item.description}}
+            </span>
+            <a class="delete-button" (click)="removeTodo(i, done)"><i class="material-icons">delete</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
